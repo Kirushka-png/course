@@ -13,7 +13,7 @@ const Login = () => {
                     <p>Password:</p>
                     <LoginInput type="password"></LoginInput>
                 </LoginInputContainer>
-                <LoginButton>Sign in</LoginButton>
+                <LoginButton to="/main">Sign in</LoginButton>
             </LoginForm>
         </LoginContainer>
     )

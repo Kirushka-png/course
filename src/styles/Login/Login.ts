@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom';
 
 export const LoginContainer = styled.div`
     width: 100vw;
@@ -44,7 +45,7 @@ export const LoginInput = styled.input`
         border: none;
     }
 `
-export const LoginButton = styled.button`
+export const LoginButton = styled(Link)`
     width: 150px;
     height: 50px;
     background-color: rgb(230,20,230);
@@ -53,6 +54,10 @@ export const LoginButton = styled.button`
     color: white;
     font-weight: 500;
     font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
     :hover{
         background-color: rgb(230,70,230);
     }
