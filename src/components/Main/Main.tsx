@@ -1,50 +1,105 @@
-import { MainContainer, Header, NavBar, Links, Link, Title, ImageSlider, Body } from "../../styles/Main/Main"
+import { Body, Header, Link, Links, MainContainer, NavBar, Title, Menu, Sidebar, MenuLink } from "../../styles/Main/Main"
+import MainPage from './MainPage/MainPage'
+import { useState, useEffect } from 'react'
 
-const images = [
-    {
-      original: 'https://picsum.photos/id/1018/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1018/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1015/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1015/250/150/',
-    },
-    {
-      original: 'https://picsum.photos/id/1019/1000/600/',
-      thumbnail: 'https://picsum.photos/id/1019/250/150/',
-    },
-];
+interface Props{
+    link: string
+}
 
-const Main = () => {
+var styles = {
+    bmBurgerButton: {
+      position: 'fixed',
+      width: '36px',
+      height: '30px',
+      left: '36px',
+      top: '36px'
+    },
+    bmBurgerBars: {
+      background: '#373a47'
+    },
+    bmBurgerBarsHover: {
+      background: '#a90000'
+    },
+    bmCrossButton: {
+      height: '24px',
+      width: '24px'
+    },
+    bmCross: {
+      background: '#bdc3c7'
+    },
+    bmMenuWrap: {
+      position: 'fixed',
+      height: '100vh'
+    },
+    bmMenu: {
+      background: '#F8F9FA',
+      padding: '2.5em 1.5em 0',
+      fontSize: '1.15em',
+      overflow: 'hidden'
+    },
+    bmMorphShape: {
+      fill: '#F8F9FA'
+    },
+    bmItemList: {
+      color: '#b8b7ad',
+      padding: '0.8em'
+    },
+    bmItem: {
+      display: 'inline-block'
+    },
+    bmOverlay: {
+      background: 'rgba(0, 0, 0, 0.3)'
+    }
+}
+
+const Main = ({ link }:Props) => {
+
+    const [mobileScreen, setMobileScreen] = useState<boolean>(window.innerWidth < 860)
+
+    useEffect(() => {
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [])
+
+    const handleResize = () =>{
+        let currentWidth = window.innerWidth
+        setMobileScreen(currentWidth < 860)
+    }
     return(
         <MainContainer>
-            <Header>
-                <NavBar>
-                    <Links>
-                        <Link>Главная</Link>
-                        <Link>Магазин</Link>
-                        <Link>Обо мне</Link>
-                        <Link>Контакты</Link>
-                    </Links>
-                    <Title>COOKIES</Title>
-                    <Links>
-                        <Link>Instagram</Link>
-                        <Link>Facebook</Link>
-                        <Link>Youtube</Link>
-                        <Link>Корзина</Link>
-                    </Links>
-                </NavBar>
-            </Header>
+            { mobileScreen ?
+                <Sidebar>
+                    <Menu styles={ styles }>
+                        <MenuLink id="home" className="menu-item" href="/main/home">Главная</MenuLink>
+                        <MenuLink id="shop" className="menu-item" href="/main/shop">Магазин</MenuLink>
+                        <MenuLink id="about" className="menu-item" href="/main/about">Обо мне</MenuLink>
+                    </Menu>
+                </Sidebar> :
+                <Header>
+                    <NavBar>
+                        <Links>
+                            <Link href="/main/home">Главная</Link>
+                            <Link href="/main/shop">Магазин</Link>
+                            <Link href="/main/about">Обо мне</Link>
+                            <Link href="/main/contacts">Контакты</Link>
+                        </Links>
+                        <Title>COOKIES</Title>
+                        <Links>
+                            <Link href="/main/home">Instagram</Link>
+                            <Link href="/main/home">Facebook</Link>
+                            <Link href="/main/home">Youtube</Link>
+                            <Link href="/main/trash">Корзина</Link>
+                        </Links>
+                    </NavBar>
+                </Header>
+            }
             <Body>
-                <ImageSlider
-                    items={images}
-                    autoPlay
-                    showPlayButton={false}
-                    showFullscreenButton={false}
-                    showThumbnails={false}
-                    slideInterval={5000}
-                />
-                
+            {
+                {
+                    'home': <MainPage />
+                }[link]
+            }
             </Body>
         </MainContainer>
     )

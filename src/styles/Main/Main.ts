@@ -1,12 +1,19 @@
 import styled from 'styled-components'
-import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css"
+import { slide } from 'react-burger-menu'
 
 const FlexCentering = "display: flex; justify-content: center; align-items: center;"
 
 export const MainContainer = styled.main`
     width: 100vw;
 `
+export const Menu = styled(slide)`
+
+`
+export const Sidebar = styled.div`
+    height: 100%;
+`
+
 export const NavBar = styled.div`
     max-width: 1140px;
     min-width: 900px;
@@ -22,10 +29,18 @@ export const Links = styled.div`
     flex-wrap: wrap;
     height: 70%;
 `
-export const Link = styled.div`
+export const Link = styled.a`
+    color: black;
+    text-decoration: none;
     ${FlexCentering}
     font-size: 14px;
     width: 100px;
+`
+export const MenuLink = styled(Link)`
+    font-size:24px;
+    :hover{
+        opacity: 0.6;
+    }
 `
 export const Title = styled.p`
     ${FlexCentering}
@@ -33,7 +48,7 @@ export const Title = styled.p`
     font-size: 40px;
 `
 export const Header = styled.nav`
-    width: 100vw;
+    width: 100%;
     height: 140px;
     position: fixed;
     z-index: 100;
@@ -41,19 +56,10 @@ export const Header = styled.nav`
     justify-content: center;
     background-color: #F8F9FA;
 `
-export const ImageSlider = styled(ImageGallery)`
-`
 export const Body = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 180px;
-    .image-gallery{
-        width: 80%;
-        height: 100%;
-    }
-    .image-gallery-content .image-gallery-slide .image-gallery-image{
-        max-height: none;
-    }
 `
