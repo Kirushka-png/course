@@ -5,13 +5,22 @@ import { slide } from 'react-burger-menu'
 const FlexCentering = "display: flex; justify-content: center; align-items: center;"
 
 export const MainContainer = styled.main`
-    width: 100vw;
+    font-family: 'Century Gothic', sans-serif;
 `
 export const Menu = styled(slide)`
 
 `
 export const Sidebar = styled.div`
-    height: 100%;
+    width: 100%;
+    height: 140px;
+    position: fixed;
+    z-index: 100;
+    background-color: #F8F9FA;
+    align-items: center;
+    justify-content: center;
+    > p{
+        margin-left:calc(50% - 100px);
+    }
 `
 
 export const NavBar = styled.div`

@@ -12,7 +12,7 @@ var styles = {
       width: '36px',
       height: '30px',
       left: '36px',
-      top: '36px'
+      top: '52px'
     },
     bmBurgerBars: {
       background: '#373a47'
@@ -75,6 +75,7 @@ const Main = ({ link }:Props) => {
                         <MenuLink id="shop" className="menu-item" href="/main/shop">Магазин</MenuLink>
                         <MenuLink id="about" className="menu-item" href="/main/about">Обо мне</MenuLink>
                     </Menu>
+                    <Title>COOKIES</Title>
                 </Sidebar> :
                 <Header>
                     <NavBar>
