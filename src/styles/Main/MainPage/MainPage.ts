@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import ImageGallery from 'react-image-gallery';
+import ReactPaginate from 'react-paginate';
 
 export const ImageSlider = styled(ImageGallery)`
 `
@@ -52,4 +53,23 @@ export const ItemText = styled.div`
     color: #212529;
     line-height: 1.5;
     font-size: 20px;
+`
+
+interface ItemsWrapperProps{
+    $mobileScreen: boolean
+}
+
+export const ItemsWrapper = styled.div<ItemsWrapperProps>`
+    width:80%;
+    > ${ItemsContainer}{
+        display: grid;
+        grid-template-columns: ${p => p.$mobileScreen ? 'minmax(200px,450px)' : 'repeat(3,minmax(200px,450px))'} ;
+    }
+`
+
+export const ItemContainer = styled(Item)`
+
+`
+export const Paginate = styled(ReactPaginate)`
+    
 `
