@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import cookie from '../../../Images/cookie1.jpg'
 import Modal from '@mui/material/Modal';
-import { ItemContainer, ItemImg, ItemText, ModalHeader, ModalBody, ModalTitle, ItemDescription, ItemCounter, BuyItemButton } from '../../../styles/Main/MainPage/MainPage';
+import { ItemContainer, ItemContainerModal, ItemImg, ItemImgModal, ItemText, ModalHeader, ModalBody, ModalTitle, ItemDescription, ItemCounter, BuyItemButton } from '../../../styles/Main/MainPage/MainPage';
 import { Item } from '../Home/Home'
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -18,6 +18,7 @@ const ModalContainer = styled(Box)`
     padding: 1rem;
     background-color: rgb(230, 199, 199);
     color:#212529;
+    border-radius: 20px;
 `
 
 interface ItemsProps {
@@ -49,8 +50,8 @@ export const ItemComponent = ({ itemInfo }: ItemsProps) => {
                         </ModalTitle>
                     </ModalHeader>
                     <ModalBody>
-                        <ItemImg src={cookie} />
-                        <ItemContainer>
+                        <ItemImgModal src={cookie} />
+                        <ItemContainerModal>
                             <ItemText>{itemInfo.name}</ItemText>
                             <ItemText>{"RUB " + itemInfo.price.toFixed(2)}</ItemText>
                             <ItemText>ОПИСАНИЕ</ItemText>
@@ -60,7 +61,7 @@ export const ItemComponent = ({ itemInfo }: ItemsProps) => {
                             <ItemText>КОЛИЧЕСТВО</ItemText>
                             <ItemCounter type='number' onChange={(e) => {const count = parseInt(e.target.value); count != 0 && setItemCount(count); !e.target.value && setItemCount(1)}} value={itemCount}/>
                             <BuyItemButton>Добавить в корзину</BuyItemButton>
-                        </ItemContainer>
+                        </ItemContainerModal>
                     </ModalBody>
                 </ModalContainer>
             </Modal>

@@ -47,6 +47,8 @@ export const Item = styled.div`
     cursor: pointer;
 `
 export const ItemImg = styled.img`
+`
+export const ItemImgModal = styled.img`
     max-width: 300px;
     min-width: 100px;
     height: fit-content;
@@ -98,8 +100,11 @@ export const ItemsWrapper = styled.div<ItemsWrapperProps>`
 `
 
 export const ItemContainer = styled(Item)`
+`
+export const ItemContainerModal = styled(Item)`
     flex: 1;
     align-items: flex-start;
+
 `
 export const Paginate = styled(ReactPaginate)`
     display:flex;
