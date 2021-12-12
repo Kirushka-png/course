@@ -39,7 +39,7 @@ const items = [
   }
 ]
 
-const MainPage = () => {
+const Home = () => {
   return (
     <MainPageContainer>
       <ImageSlider
@@ -64,4 +64,4 @@ const MainPage = () => {
     </MainPageContainer>
   )
 }
-export default MainPage;
+export default Home;

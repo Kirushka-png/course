@@ -71,5 +71,33 @@ export const ItemContainer = styled(Item)`
 
 `
 export const Paginate = styled(ReactPaginate)`
-    
+    display:flex;
+    width: 100%;
+    padding: 0;
+    justify-content: center;
+    column-gap:5px;
+    user-select: none;
+    > li{
+        width: 30px;
+        height:40px;
+        border: 1px solid black;
+        cursor:pointer;
+        text-decoration: none;
+        list-style: none;
+    }
+    > li a{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        width:100%;
+        height:100%;
+    }
+    > li:hover{
+        color: rgb(230, 199, 199);
+        border-color: rgb(230, 199, 199);
+    }
+    .selected{
+        color: rgb(230, 199, 199);
+        border-color: rgb(230, 199, 199);
+    }
 `

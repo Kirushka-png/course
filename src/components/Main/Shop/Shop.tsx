@@ -1,33 +1,15 @@
 import { useEffect, useState } from 'react';
 import { shopItems } from '../../../utils/ShopItems'
-import { Item } from '../MainPage/MainPage'
-import { ItemsContainer, ItemsTitle, ItemContainer, ItemImg, ItemText, ItemsWrapper, Paginate } from '../../../styles/Main/MainPage/MainPage';
-import cookie from '../../../Images/cookie1.jpg'
-
-interface ItemsProps {
-    currentItems: Item[]
-}
-function Items({ currentItems }: ItemsProps) {
-    return (
-        <>
-            {currentItems &&
-                currentItems.map((element) => (
-                    <ItemContainer>
-                        <ItemImg src={cookie} />
-                        <ItemText>{element.name}</ItemText>
-                        <ItemText>{"RUB " + element.price.toFixed(2)}</ItemText>
-                    </ItemContainer>
-                ))}
-        </>
-    );
-}
+import { Item } from '../Home/Home'
+import { ItemsContainer, ItemsWrapper, Paginate } from '../../../styles/Main/MainPage/MainPage';
+import ItemComponent from './ItemComponent'
 
 interface Props {
     itemsPerPage: number,
     mobileScreen: boolean
 }
 
-export const Paginator = ({ itemsPerPage, mobileScreen }: Props) => {
+export const Shop = ({ itemsPerPage, mobileScreen }: Props) => {
     const [currentItems, setCurrentItems] = useState<Item[]>(shopItems);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
@@ -47,17 +29,22 @@ export const Paginator = ({ itemsPerPage, mobileScreen }: Props) => {
         <ItemsWrapper $mobileScreen={mobileScreen}>
             <Paginate
                 breakLabel="..."
-                nextLabel="next >"
+                nextLabel=">"
                 onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
+                pageRangeDisplayed={0}
+                marginPagesDisplayed={2}
                 pageCount={pageCount}
-                previousLabel="< previous"
+                previousLabel="<"
             />
             <ItemsContainer>
-                <Items currentItems={currentItems} />
+                {currentItems &&
+                    currentItems.map((element) => (
+                        <ItemComponent itemInfo={element}/>
+                    ))
+                }
             </ItemsContainer>
         </ItemsWrapper>
     )
 }
 
-export default Paginator;
+export default Shop;

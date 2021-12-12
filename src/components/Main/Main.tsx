@@ -1,7 +1,7 @@
 import { Body, Header, Link, Links, MainContainer, NavBar, Title, Menu, Sidebar, MenuLink } from "../../styles/Main/Main"
-import MainPage from './MainPage/MainPage'
+import Home from './Home/Home'
 import { useState, useEffect } from 'react'
-import { Paginator } from './Paginator/Paginator'
+import { Shop } from './Shop/Shop'
 
 interface Props {
   link: string
@@ -99,8 +99,8 @@ const Main = ({ link }: Props) => {
       <Body>
         {
           {
-            'home': <MainPage />,
-            'shop': <Paginator itemsPerPage={mobileScreen ? 4 : 9} mobileScreen={mobileScreen} />
+            'home': <Home />,
+            'shop': <Shop itemsPerPage={mobileScreen ? 4 : 9} mobileScreen={mobileScreen} />
           }[link]
         }
       </Body>

@@ -50,6 +50,7 @@ export const MenuLink = styled(Link)`
     :hover{
         opacity: 0.6;
     }
+    white-space: nowrap;
 `
 export const Title = styled.p`
     ${FlexCentering}
