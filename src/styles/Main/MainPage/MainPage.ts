@@ -47,13 +47,43 @@ export const Item = styled.div`
     cursor: pointer;
 `
 export const ItemImg = styled.img`
-    width:100%;
+    max-width: 300px;
+    min-width: 100px;
+    height: fit-content;
 `
 export const ItemText = styled.div`
     color: #212529;
     line-height: 1.5;
     font-size: 20px;
 `
+export const ItemDescription = styled(ItemText)`
+    color: #212529;
+    line-height: 1.5;
+    font-size: 16px;
+`
+export const ItemCounter = styled.input`
+    width: 100px;
+    height: 30px;
+`
+export const BuyItemButton = styled.button`
+    
+`
+export const ModalHeader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 60px;
+`
+export const ModalBody = styled.div`
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+`
+export const ModalTitle = styled.p`
+    line-height: 1.5;
+    font-size: 1.5rem;
+`
+
 
 interface ItemsWrapperProps{
     $mobileScreen: boolean
@@ -68,7 +98,8 @@ export const ItemsWrapper = styled.div<ItemsWrapperProps>`
 `
 
 export const ItemContainer = styled(Item)`
-
+    flex: 1;
+    align-items: flex-start;
 `
 export const Paginate = styled(ReactPaginate)`
     display:flex;
