@@ -3,13 +3,15 @@ import { shopItems } from '../../../utils/ShopItems'
 import { Item } from '../Home/Home'
 import { ItemsContainer, ItemsWrapper, Paginate } from '../../../styles/Main/MainPage/MainPage';
 import ItemComponent from './ItemComponent'
+import { CartItem } from '../Main'
 
 interface Props {
     itemsPerPage: number,
-    mobileScreen: boolean
+    mobileScreen: boolean,
+    onChangeItem(newItem: CartItem): any
 }
 
-export const Shop = ({ itemsPerPage, mobileScreen }: Props) => {
+export const Shop = ({ itemsPerPage, mobileScreen, onChangeItem }: Props) => {
     const [currentItems, setCurrentItems] = useState<Item[]>(shopItems);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
@@ -39,7 +41,7 @@ export const Shop = ({ itemsPerPage, mobileScreen }: Props) => {
             <ItemsContainer>
                 {currentItems &&
                     currentItems.map((element) => (
-                        <ItemComponent itemInfo={element}/>
+                        <ItemComponent itemInfo={element} onChangeItem={onChangeItem}/>
                     ))
                 }
             </ItemsContainer>

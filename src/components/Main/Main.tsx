@@ -1,10 +1,16 @@
-import { Body, Header, Link, Links, MainContainer, NavBar, Title, Menu, Sidebar, MenuLink } from "../../styles/Main/Main"
-import Home from './Home/Home'
+import { Body, Header, Link, Links, MainContainer, NavBar, Title, Menu, Sidebar, MenuLink, CartCount } from "../../styles/Main/Main"
+import Home, { Item } from './Home/Home'
 import { useState, useEffect } from 'react'
 import { Shop } from './Shop/Shop'
+import Cart from './Cart/Cart'
+import _ from 'lodash'
 
 interface Props {
   link: string
+}
+
+export interface CartItem extends Item {
+  count: number
 }
 
 var styles = {
@@ -56,6 +62,11 @@ var styles = {
 const Main = ({ link }: Props) => {
 
   const [mobileScreen, setMobileScreen] = useState<boolean>(window.innerWidth < 860)
+  const [selectedCartItems, setSelectedCartItems] = useState<CartItem[]>([])
+
+  useEffect(() => {
+    console.log(selectedCartItems)
+  }, [selectedCartItems])
 
   useEffect(() => {
     handleResize();
@@ -63,6 +74,17 @@ const Main = ({ link }: Props) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [])
 
+  const onChangeItems = (newItems: CartItem[]) => {
+    setSelectedCartItems([...newItems])
+  }
+  const onChangeItem = (newItem: CartItem) => {
+    let tempItem = _.find(selectedCartItems, { id: newItem.id })
+    if (tempItem) {
+      tempItem.count += newItem.count;
+      setSelectedCartItems(a => [...a])
+    }
+    else { setSelectedCartItems(a => [...a, newItem]) }
+  }
   const handleResize = () => {
     let currentWidth = window.innerWidth
     setMobileScreen(currentWidth < 860)
@@ -72,26 +94,30 @@ const Main = ({ link }: Props) => {
       {mobileScreen ?
         <Sidebar>
           <Menu styles={styles}>
-            <MenuLink id="home" className="menu-item" href="/main/home">Главная</MenuLink>
-            <MenuLink id="shop" className="menu-item" href="/main/shop">Магазин</MenuLink>
-            <MenuLink id="about" className="menu-item" href="/main/about">Обо мне</MenuLink>
+            <MenuLink id="home" className="menu-item" to="/main/home">Главная</MenuLink>
+            <MenuLink id="shop" className="menu-item" to="/main/shop">Магазин</MenuLink>
+            <MenuLink id="about" className="menu-item" to="/main/about">Обо мне</MenuLink>
           </Menu>
           <Title>COOKIES</Title>
         </Sidebar> :
         <Header>
           <NavBar>
             <Links>
-              <Link href="/main/home">Главная</Link>
-              <Link href="/main/shop">Магазин</Link>
-              <Link href="/main/about">Обо мне</Link>
-              <Link href="/main/contacts">Контакты</Link>
+              <Link to="/main/home">Главная</Link>
+              <Link to="/main/shop">Магазин</Link>
+              <Link to="/main/about">Обо мне</Link>
+              <Link to="/main/contacts">Контакты</Link>
             </Links>
             <Title>COOKIES</Title>
             <Links>
-              <Link href="/main/home">Instagram</Link>
-              <Link href="/main/home">Facebook</Link>
-              <Link href="/main/home">Youtube</Link>
-              <Link href="/main/trash">Корзина</Link>
+              <Link to="/main/home">Instagram</Link>
+              <Link to="/main/home">Facebook</Link>
+              <Link to="/main/home">Youtube</Link>
+              <Link to="/main/cart">Корзина 
+                {selectedCartItems.length != 0 &&
+                  <CartCount>{selectedCartItems.length}</CartCount>
+                }
+              </Link>
             </Links>
           </NavBar>
         </Header>
@@ -100,7 +126,8 @@ const Main = ({ link }: Props) => {
         {
           {
             'home': <Home />,
-            'shop': <Shop itemsPerPage={mobileScreen ? 4 : 9} mobileScreen={mobileScreen} />
+            'shop': <Shop itemsPerPage={mobileScreen ? 4 : 9} mobileScreen={mobileScreen} onChangeItem={onChangeItem} />,
+            'cart': <Cart selectedCartItems={selectedCartItems} onChangeItems={(newItems: CartItem[]) => { onChangeItems(newItems) }} />
           }[link]
         }
       </Body>

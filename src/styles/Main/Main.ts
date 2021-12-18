@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import "react-image-gallery/styles/css/image-gallery.css"
 import { slide } from 'react-burger-menu'
-
+import { NavLink } from 'react-router-dom'
 const FlexCentering = "display: flex; justify-content: center; align-items: center;"
 
 export const MainContainer = styled.main`
@@ -38,7 +38,7 @@ export const Links = styled.div`
     flex-wrap: wrap;
     height: 70%;
 `
-export const Link = styled.a`
+export const Link = styled(NavLink)`
     color: black;
     text-decoration: none;
     ${FlexCentering}
@@ -72,4 +72,17 @@ export const Body = styled.div`
     flex-direction: column;
     align-items: center;
     padding-top: 180px;
+`
+
+export const CartCount = styled.div`
+    margin-left: 5px;
+    width:20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: gray;
+    color: white;
+    font-size: 12px;
+    display:flex;
+    justify-content: center;
+    align-items: center
 `
