@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { Shop } from './Shop/Shop'
 import Cart from './Cart/Cart'
 import _ from 'lodash'
+import Cookies from '../../utils/Cookies'
+import Supply from './Supply/Supply'
 
 interface Props {
   link: string
@@ -63,12 +65,10 @@ const Main = ({ link }: Props) => {
 
   const [mobileScreen, setMobileScreen] = useState<boolean>(window.innerWidth < 860)
   const [selectedCartItems, setSelectedCartItems] = useState<CartItem[]>([])
+  const [role, setRole] = useState("user")
 
   useEffect(() => {
-    console.log(selectedCartItems)
-  }, [selectedCartItems])
-
-  useEffect(() => {
+    Cookies.getCookie("role") == "manager" && setRole("manager")
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -106,7 +106,10 @@ const Main = ({ link }: Props) => {
               <Link to="/main/home">Главная</Link>
               <Link to="/main/shop">Магазин</Link>
               <Link to="/main/about">Обо мне</Link>
-              <Link to="/main/contacts">Контакты</Link>
+              {
+                role.includes("manager") ? <Link to="/main/supplies">Доставки</Link> :
+                <Link to="/main/contacts">Контакты</Link>
+              }
             </Links>
             <Title>COOKIES</Title>
             <Links>
@@ -127,7 +130,8 @@ const Main = ({ link }: Props) => {
           {
             'home': <Home />,
             'shop': <Shop itemsPerPage={mobileScreen ? 4 : 9} mobileScreen={mobileScreen} onChangeItem={onChangeItem} />,
-            'cart': <Cart selectedCartItems={selectedCartItems} onChangeItems={(newItems: CartItem[]) => { onChangeItems(newItems) }} />
+            'cart': <Cart selectedCartItems={selectedCartItems} onChangeItems={(newItems: CartItem[]) => { onChangeItems(newItems) }} />,
+            'supplies': <Supply/>
           }[link]
         }
       </Body>

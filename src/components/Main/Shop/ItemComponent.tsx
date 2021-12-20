@@ -60,7 +60,7 @@ export const ItemComponent = ({ itemInfo, onChangeItem }: ItemsProps) => {
                                 Это информация о товаре. Расскажите подробно, что он из себя представляет, и перечислите всю необходимую информацию: размеры, материалы, инструкции по уходу и т. д. Это также хорошая возможность сообщить, в чем особенность вашей продукции и какую выгоду покупатели получат в итоге. Подробные сведения о товаре помогут вашим посетителям определиться с покупкой.
                             </ItemDescription>
                             <ItemText>КОЛИЧЕСТВО</ItemText>
-                            <ItemCounter type='number' onChange={(e) => { const count = parseInt(e.target.value); count != 0 && setItemCount(count); !e.target.value && setItemCount(1) }} value={itemCount} />
+                            <ItemCounter type='number' onChange={(e: any) => { const count = parseInt(e.target.value); count != 0 && setItemCount(count); !e.target.value && setItemCount(1) }} value={itemCount} />
                             <BuyItemButton onClick={()=>{onChangeItem({...itemInfo, count: itemCount})}}>Добавить в корзину</BuyItemButton>
                         </ItemContainerModal>
                     </ModalBody>
