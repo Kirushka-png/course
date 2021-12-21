@@ -16,7 +16,9 @@ export const SupplyContainer = styled.div`
         }
       }
     }
-
+    tr td{
+      cursor: pointer;
+    }
     th,
     td {
       margin: 0;

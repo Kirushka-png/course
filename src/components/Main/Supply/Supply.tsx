@@ -4,30 +4,12 @@ import { useMemo, useEffect, useState } from 'react'
 import _ from 'lodash'
 
 export const Supply = () => {
-    interface Category {
-        'Код_категории_сладостей': number,
-        'Наименование': string
-    }
+
     const [deliveries, setDeliveries] = useState([{}])
-    const [Categories, setCategories] = useState<Category[]>()
     const [delivererNumber, setDelivererNumber] = useState(100)
     const [Alert, setAlert] = useState(false)
-
-    const getAllCategories = async (url: string) => {
-        const newData = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'content-type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                setCategories(data.recordset as Category[])
-            });
-    }
+    const [Deliverers, setDeliverers] = useState([{}])
+    const [alertMessage, setAlertMessage] = useState("")
 
     const getDeliverers = async (url: string) => {
         const newData = await fetch(url, {
@@ -42,7 +24,8 @@ export const Supply = () => {
             })
             .then((data) => {
                 setDeliveries(data.recordset)
-                setAlert(false) 
+                setDeliverers(data.recordset)
+                setAlert(false)
             });
     }
     const getDeliveriesByDeliverer = async (url: string, param: number) => {
@@ -59,16 +42,18 @@ export const Supply = () => {
             })
             .then((data) => {
                 console.log(data.recordset)
-                if(data.recordset.length == 0){
+                if (data.recordset.length == 0) {
                     setDeliveries([{}])
                     setAlert(true)
+                    setAlertMessage("У данного заказчика нет заказов")
                 }
-                else{
+                else {
                     setDeliveries(data.recordset)
-                    setAlert(false) 
+                    setAlert(false)
                 }
             });
     }
+
     useEffect(() => {
     }, [])
 
@@ -134,7 +119,9 @@ export const Supply = () => {
                             return (
                                 <tr {...row.getRowProps()}>
                                     {row.cells.map(cell => {
-                                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                        if(cell.getCellProps().key.toString().includes("Код_заказчика")){ 
+                                        return <td {...cell.getCellProps()} onClick={() => { getDeliveriesByDeliverer("/getDeliveriesByDeliverer", cell.value) }}>{cell.render('Cell')}</td> }
+                                        else return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                     })}
                                 </tr>
                             )
@@ -143,14 +130,7 @@ export const Supply = () => {
                 </table>
             }
             {
-                Alert && <AlertMessage>У данного заказчика нет заказов</AlertMessage>
-            }
-            {
-                (!_.isEmpty(deliveries[0]) || Alert) &&
-                <>
-                    <Input type="number" value={delivererNumber} onChange={(e: any) => { setDelivererNumber(e.target.value) }} />
-                    <ApplyButton onClick={() => { getDeliveriesByDeliverer("/getDeliveriesByDeliverer", delivererNumber) }}>OK</ApplyButton>
-                </>
+                Alert && <AlertMessage>{alertMessage}</AlertMessage>
             }
         </SupplyContainer>
     )
