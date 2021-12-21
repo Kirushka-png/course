@@ -22,6 +22,32 @@ app.get('/getDeliverers', (req,res) => {
         res.send(r)
     })
 })
+app.post('/getAnal1', (req,res) => {
+    dbOperation.getAnal1(req.body.id,req.body.date).then(r =>{
+        res.send(r)
+    })
+})
+app.post('/getAnal2', (req,res) => {
+    dbOperation.getAnal2(req.body.id).then(r =>{
+        res.send(r)
+    })
+})
+app.post('/getAnal3', (req,res) => {
+    dbOperation.getAnal3(req.body.id).then(r =>{
+        res.send(r)
+    })
+})
+app.post('/getAnal4', (req,res) => {
+    dbOperation.getAnal4(req.body.id).then(r =>{
+        res.send(r)
+    })
+})
+app.post('/getAnal5', (req,res) => {
+    dbOperation.getAnal5(req.body.id).then(r =>{
+        res.send(r)
+    })
+})
+
 
 app.post('/getDeliveriesByDeliverer', (req,res) => {
     dbOperation.getDeliveriesByDeliverer(req.body.param).then(r =>{

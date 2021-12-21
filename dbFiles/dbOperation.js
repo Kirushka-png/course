@@ -301,6 +301,61 @@ const getProductsOfUnitOfMeasurement = async(param) => {
         console.log(e)
     }
 }
+const getAnal1 = async(param,param1) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check11 ${param},${param1} `)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getAnal2 = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check12 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getAnal3 = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check13 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getAnal4 = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check14 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getAnal5 = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check15 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
 
 
 
@@ -322,5 +377,10 @@ module.exports = {
     setEmployees,
     deleteEmployeeWithID,
     getDeliveriesByDeliverer,
-    getDeliverers
+    getDeliverers,
+    getAnal1,
+    getAnal2,
+    getAnal3,
+    getAnal4,
+    getAnal5
 }
