@@ -132,7 +132,7 @@ const getManufacturer = async() => {
     }
 }
 
-const getEmployees = async() => {
+const getEmployees1 = async() => {
     try {
         let pool = await sql.connect(config);
         let emploeeys = pool.request().query("SELECT * from Сотрудники")
