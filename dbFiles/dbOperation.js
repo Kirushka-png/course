@@ -12,6 +12,18 @@ const getEmployees = async() => {
     }
 }
 
+const getPositions = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Должность")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
 const setEmployees = async(elem) => {
     try {
         let pool = await sql.connect(config);
