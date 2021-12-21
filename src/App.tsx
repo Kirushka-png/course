@@ -24,6 +24,7 @@ function App() {
         <Route path="/main/shop" element={<Main link="shop"/>}/>
         <Route path="/main/cart" element={<Main link="cart"/>}/>
         <Route path="/main/supplies" element={<Main link="supplies"/>}/>
+        <Route path="/main/tables" element={<Main link="tables"/>}/>
       </Routes>
     </Router>
   )

@@ -1,6 +1,7 @@
 const config = require('./dbConfig'),
     sql = require('mssql')
-const getEmployees = async() => {
+
+const getCategories = async() => {
     try {
         let pool = await sql.connect(config);
         let emploeeys = pool.request().query("SELECT * from Категория_сладостей")
@@ -132,7 +133,7 @@ const getManufacturer = async() => {
     }
 }
 
-const getEmployees1 = async() => {
+const getEmployees = async() => {
     try {
         let pool = await sql.connect(config);
         let emploeeys = pool.request().query("SELECT * from Сотрудники")
@@ -373,7 +374,6 @@ const getDeliverers = async() => {
 }
 
 module.exports = {
-    getEmployees,
     setEmployees,
     deleteEmployeeWithID,
     getDeliveriesByDeliverer,
@@ -382,5 +382,19 @@ module.exports = {
     getAnal2,
     getAnal3,
     getAnal4,
-    getAnal5
-}
+    getAnal5,
+    getEmployees,
+    getPositions,
+    getTypeOfDelivery,
+    getUnitsOfMeasurement,
+    getSupplies,
+    getCustomTools,
+    getProducts,
+    getOrderStatus,
+    getManufacturer,
+    getSuppliers,
+    getSupplyOfGoods,
+    getOrders,
+    getCategories,
+    getCustomers
+}   

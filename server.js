@@ -12,7 +12,91 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/getCategories', (req,res) => {
+    dbOperation.getCategories().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getEmployees', (req,res) => {
     dbOperation.getEmployees().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getPositions', (req,res) => {
+    dbOperation.getPositions().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getTypeOfDelivery', (req,res) => {
+    dbOperation.getTypeOfDelivery().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getUnitsOfMeasurement', (req,res) => {
+    dbOperation.getUnitsOfMeasurement().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getSupplies', (req,res) => {
+    dbOperation.getSupplies().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getCustomTools', (req,res) => {
+    dbOperation.getCustomTools().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getProducts', (req,res) => {
+    dbOperation.getProducts().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getOrderStatus', (req,res) => {
+    dbOperation.getOrderStatus().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getManufacturer', (req,res) => {
+    dbOperation.getManufacturer().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getSuppliers', (req,res) => {
+    dbOperation.getSuppliers().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getSupplyOfGoods', (req,res) => {
+    dbOperation.getSupplyOfGoods().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getOrders', (req,res) => {
+    dbOperation.getOrders().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getCategories', (req,res) => {
+    dbOperation.getCategories().then(r => {
+        res.send(r)
+    })
+})
+
+app.get('/getCustomers', (req,res) => {
+    dbOperation.getCustomers().then(r => {
         res.send(r)
     })
 })
