@@ -24,6 +24,152 @@ const getPositions = async() => {
     }
 }
 
+const getTypeOfDelivery = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Вид_доставки")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getUnitsOfMeasurement = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Единицы_измерения")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getCustomTools = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Заказ_товары")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getCustomers = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Заказчики")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getOrders = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Заказы")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getSupplyOfGoods = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Поставка_товары")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getSupplies = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Поставки")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getSuppliers = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Поставщики")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getManufacturer = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Производитель")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getEmployees = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Сотрудники")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getOrderStatus = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Статус_заказа")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+const getProducts = async() => {
+    try {
+        let pool = await sql.connect(config);
+        let emploeeys = pool.request().query("SELECT * from Товары")
+        console.log(emploeeys)
+        return emploeeys
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+
+
 const setEmployees = async(elem) => {
     try {
         let pool = await sql.connect(config);
@@ -56,6 +202,108 @@ const getDeliveriesByDeliverer = async(param) => {
         console.log(e)
     }
 }
+const getSupplierAndSupplies = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check2 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getRestOfGoods = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check3 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getLastDeliveryOfGoods = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check4 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getCustomersLastOrder = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check5 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getEmployeeOrders = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check6 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getProductsOfCategory = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check7 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getProductsOfManufacturer = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check8 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getOrdersInStatus = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check9 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+const getProductsOfUnitOfMeasurement = async(param) => {
+    try {
+        let pool = await sql.connect(config);
+        let deliveries = pool.request().query(`exec check10 ${param}`)
+        console.log(deliveries)
+        return deliveries
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+
+
 
 const getDeliverers = async() => {
     try {
