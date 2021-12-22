@@ -718,6 +718,9 @@ module.exports = {
     InsertProducts,
     InsertSuppliers,
     InsertSupplies,
+    InsertSupplyOfGoods,
+    InsertTypeOfDelivery,
+    InsertUnitsOfMeasurement,
     UpdateCategories,
     UpdateCustomTools,
     UpdateCustomers,
@@ -728,5 +731,8 @@ module.exports = {
     UpdatePositions,
     UpdateProducts,
     UpdateSuppliers,
-    UpdateSupplies
+    UpdateSupplies,
+    UpdateSupplyOfGoods,
+    UpdateTypeOfDelivery,
+    UpdateUnitsOfMeasurement
 }   
