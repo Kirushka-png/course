@@ -138,6 +138,20 @@ app.post('/getDeliveriesByDeliverer', (req,res) => {
         res.send(r)
     })
 })
+
+// Вставки
+app.post('/InsertOrders', (req,res) => {
+    dbOperation.InsertOrders(req.body.id,req.body.id_customer,req.body.pay,req.body.id_deliver,req.body.date,req.body.area,req.body.city,req.body.street,req.body.id_status,req.body.id_employee,req.body.price).then(r =>{
+        res.send(r)
+    })
+})
+// Обновления
+app.post('/UpdateOrders', (req,res) => {
+    dbOperation.UpdateOrders(req.body.id,req.body.id_customer,req.body.pay,req.body.id_deliver,req.body.date,req.body.area,req.body.city,req.body.street,req.body.id_status,req.body.id_employee,req.body.price).then(r =>{
+        res.send(r)
+    })
+})
+
 // app.get('/quit', (req,res) => {
 //     console.log('Called quit')
 //     res.send({result:"Bye"})
