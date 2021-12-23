@@ -630,7 +630,7 @@ const updateSupplies  = async(id,inn,date,price) => {
 const updateSuppliers  = async(inn,name,area,city,street,phone) => {
     try {
         let pool = await sql.connect(config);
-        let deliveries = pool.request().query(`update Поставщики set Название_организации='${name}',Область='${area}',Город='${city}',УлицаКвДом='${street}',Телефон='${phone} where ИНН_поставщика='${inn}'`)
+        let deliveries = pool.request().query(`update Поставщики set Название_организации='${name}',Область='${area}',Город='${city}',УлицаКвДом='${street}',Телефон='${phone}' where ИНН_поставщика='${inn}'`)
         console.log(deliveries)
         return deliveries
     }
@@ -641,7 +641,7 @@ const updateSuppliers  = async(inn,name,area,city,street,phone) => {
 const updateManufacturer  = async(inn,name,area,city,street,phone) => {
     try {
         let pool = await sql.connect(config);
-        let deliveries = pool.request().query(`update Производитель set set Название_организации='${name}',Область='${area}',Город='${city}',УлицаКвДом='${street}',Телефон='${phone} where ИНН_производителя='${inn}'`)
+        let deliveries = pool.request().query(`update Производитель set set Название_организации='${name}',Область='${area}',Город='${city}',УлицаКвДом='${street}',Телефон='${phone}' where ИНН_производителя='${inn}'`)
         console.log(deliveries)
         return deliveries
     }

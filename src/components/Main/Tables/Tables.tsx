@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,8 +15,9 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { Input } from '@mui/material';
 import allTablesWithRequests from "../../../utils/Tables";
-import ChildModal from './ChildModal'
+import Menu from '@mui/material/Menu';
 import _ from 'lodash'
+
 interface Props {
 }
 
@@ -37,10 +38,25 @@ export const style = {
 
 export const Tables = ({ }: Props) => {
 
+
     const [rows, setRows] = useState([{}])
     const [selectedTable, setSelectedTable] = useState("")
     const [openModal, setOpenModal] = useState(false)
     const [tempData, setTempData] = useState<any>({})
+    const [openErrorModal, setOpenErrorModal] = useState(false)
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [editData, setEditData] = useState(false)
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event: React.MouseEvent<HTMLTableCellElement>) => {
+        setAnchorEl(event.currentTarget);
+        event.preventDefault();
+    };
+    const handleClose = () => {
+        setEditData(true)
+        setAnchorEl(null)
+        setOpenModal(true)
+    };
 
     const getData = async (url: string) => {
         const newData = await fetch(url, {
@@ -59,17 +75,18 @@ export const Tables = ({ }: Props) => {
     }
 
     const insertData = async (url: string | undefined) => {
-        if(url) {
+        if (url) {
             let tempObj = {}
-            Object.keys(rows[0]).forEach((key,idx) => {
-                if(idx == 0){
+            Object.keys(rows[0]).forEach((key, idx) => {
+                if (idx == 0 && !key.includes("ИНН") && !editData ) {
                     let tempId = (rows[rows.length - 1] as any)[key] + 1;
                     (tempObj as any)[key] = tempId
                 }
-                else{
+                else {
                     (tempObj as any)[key] = tempData[key]
                 }
             });
+            console.log(tempObj)
             const newData = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -82,8 +99,15 @@ export const Tables = ({ }: Props) => {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log("+");
-                    setOpenModal(false)
+                    console.log(data)
+                    if (data.name && data.name.includes("Error")) {
+                        setOpenErrorModal(true)
+                    }
+                    else {
+                        setOpenModal(false)
+                        setTempData({})
+                        getData(selectedTable)
+                    }
                 });
         }
     }
@@ -113,34 +137,55 @@ export const Tables = ({ }: Props) => {
     return (
         <>
             {selectedTable != "" &&
-                <Modal
-                    open={openModal}
-                    onClose={() => { setOpenModal(false) }}
-                    aria-labelledby="parent-modal-title"
-                    aria-describedby="parent-modal-description"
-                >
-                    <Box sx={{ ...style, width: 400 }}>
-                        <h2 id="parent-modal-title">Введите все данные</h2>
-                        {
+                <>
+                    <Modal
+                        open={openModal}
+                        onClose={() => { setOpenModal(false) }}
+                        aria-labelledby="parent-modal-title"
+                        aria-describedby="parent-modal-description"
+                    >
+                        <Box sx={{ ...style, width: 400 }}>
+                            <h2 id="parent-modal-title">Введите все данные</h2>
+                            {
 
-                            Object.keys(rows[0]).map((key, idx) => {
-                                if (idx == 0) {
-                                    let tempId = (rows[rows.length - 1] as any)[key] + 1
-                                    return <>
-                                        <p id="child-modal-description">{key} : {tempId}</p>
-                                    </>
-                                }
-                                else {
-                                    return <>
-                                        <p id="child-modal-description">{key}</p>
-                                        <Input value={tempData[key]} onChange={(e) => { ChangeParam(e.target.value, key) }} />
-                                    </>
-                                }
-                            })
-                        }
-                        <Button variant="contained" onClick={() => { let temp = _.find(allTablesWithRequests,{get: selectedTable}); insertData(temp?.insert)}}>Добавить</Button>
-                    </Box>
-                </Modal>
+                                Object.keys(rows[0]).map((key, idx) => {
+                                    if ((idx == 0 && !key.includes("ИНН")) || (editData && idx == 0)) {
+                                        let tempId = (rows[rows.length - 1] as any)[key] + 1
+                                        return <>
+                                            <p id="child-modal-description">{key} : {editData ? tempData[key] : tempId}</p>
+                                        </>
+                                    }
+                                    else {
+                                        return <>
+                                            <p id="child-modal-description">{key}</p>
+                                            <Input value={tempData[key]} onChange={(e) => { ChangeParam(e.target.value, key) }} />
+                                        </>
+                                    }
+                                })
+                            }
+                            <Button variant="contained" onClick={() => { 
+                                let temp = _.find(allTablesWithRequests, { get: selectedTable }); 
+                                
+                                editData ? insertData(temp?.update) : insertData(temp?.insert)
+                                }}>{editData ? "Изменить" :"Добавить"}</Button>
+                        </Box>
+                    </Modal>
+                    <Modal
+                        hideBackdrop
+                        open={openErrorModal}
+                        onClose={() => { setOpenErrorModal(false) }}
+                        aria-labelledby="child-modal-title"
+                        aria-describedby="child-modal-description"
+                    >
+                        <Box sx={{ ...style, width: 200 }}>
+                            <h2 id="child-modal-title">Ошибка запроса</h2>
+                            <p id="child-modal-description">
+                                Неверно введены данные
+                            </p>
+                            <Button onClick={() => { setOpenErrorModal(false) }}>Закрыть</Button>
+                        </Box>
+                    </Modal>
+                </>
             }
             <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-filled-label">Таблица</InputLabel>
@@ -174,14 +219,25 @@ export const Tables = ({ }: Props) => {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 {Object.keys(row).map((key: string) => {
-                                    return <TableCell align="left">{row[key]}</TableCell>
+                                    return <TableCell align="left" onContextMenu={(e) => { handleClick(e); setTempData(row)}}>{row[key]}</TableCell>
                                 })}
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
+                <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                >
+                    <MenuItem onClick={() => { handleClose(); }}>Изменить</MenuItem>
+                </Menu>
             </TableContainer>
-            {selectedTable != "" && <Button variant="contained" onClick={() => { setOpenModal(true) }}>Добавить новую строку</Button>}
+            {selectedTable != "" && <Button variant="contained" onClick={() => { setOpenModal(true); setEditData(false); setTempData({}) }}>Добавить новую строку</Button>}
         </>
     )
 }

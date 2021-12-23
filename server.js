@@ -144,6 +144,9 @@ app.post('/insertTypeOfDelivery', (req,res) => {
     dbOperation.insertTypeOfDelivery(req.body.Код_вида_доставки,req.body.Наименование).then(r =>{
         res.send(r)
     })
+    .catch(er =>{
+        res.send(er)
+    })
 })
 app.post('/insertPositions', (req,res) => {
     dbOperation.insertPositions(req.body.Код_должности,req.body.Наименование).then(r =>{
@@ -198,6 +201,9 @@ app.post('/insertManufacturer', (req,res) => {
 app.post('/insertEmployees', (req,res) => {
     dbOperation.insertEmployees(req.body.Код_сотрудника,req.body.Фамилия,req.body.Имя,req.body.Отчество,req.body.Код_должности,req.body.Телефон,req.body.Область,req.body.Город,req.body.УлицаКвДом).then(r =>{
         res.send(r)
+    })    
+    .catch(er =>{
+        res.send(er)
     })
 })
 app.post('/insertOrderStatus', (req,res) => {
@@ -211,73 +217,73 @@ app.post('/insertProducts', (req,res) => {
     })
 })
 // Обновления
-app.post('/UpdateTypeOfDelivery', (req,res) => {
-    dbOperation.UpdateTypeOfDelivery(req.body.Код_вида_доставки,req.body.Наименование).then(r =>{
+app.post('/updateTypeOfDelivery', (req,res) => {
+    dbOperation.updateTypeOfDelivery(req.body.Код_вида_доставки,req.body.Наименование).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdatePositions', (req,res) => {
-    dbOperation.UpdatePositions(req.body.Код_должности,req.body.Наименование).then(r =>{
+app.post('/updatePositions', (req,res) => {
+    dbOperation.updatePositions(req.body.Код_должности,req.body.Наименование).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateUnitsOfMeasurement', (req,res) => {
-    dbOperation.UpdateUnitsOfMeasurement(req.body.Код_единицы_измерения,req.body.Наименование).then(r =>{
+app.post('/updateUnitsOfMeasurement', (req,res) => {
+    dbOperation.updateUnitsOfMeasurement(req.body.Код_единицы_измерения,req.body.Наименование).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateCustomTools', (req,res) => {
-    dbOperation.UpdateCustomTools(req.body.Код_заказа,req.body.Код_товара,req.body.Количество_товара).then(r =>{
+app.post('/updateCustomTools', (req,res) => {
+    dbOperation.updateCustomTools(req.body.Код_заказа,req.body.Код_товара,req.body.Количество_товара).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateCustomers', (req,res) => {
-    dbOperation.UpdateCustomers(req.body.Код_заказчика,req.body.Фамилия,req.body.Имя,req.body.Отчество,req.body.Телефон,req.body.Логин,req.body.Пароль,req.body.Дата_рождения,req.body.Почта,req.body.Дата_регистрации).then(r =>{
+app.post('/updateCustomers', (req,res) => {
+    dbOperation.updateCustomers(req.body.Код_заказчика,req.body.Фамилия,req.body.Имя,req.body.Отчество,req.body.Телефон,req.body.Логин,req.body.Пароль,req.body.Дата_рождения,req.body.Почта,req.body.Дата_регистрации).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateOrders', (req,res) => {
-    dbOperation.UpdateOrders(req.body.Код_заказа,req.body.Код_заказчика,req.body.Вид_оплаты,req.body.Код_вида_доставки,req.body.Дата_заказа,req.body.Область_доставки,req.body.Город_доставки,req.body.УлицаКвДом_доставки,req.body.Код_статуса_заказа,req.body.Код_сотрудника,req.body.Цена).then(r =>{
+app.post('/updateOrders', (req,res) => {
+    dbOperation.updateOrders(req.body.Код_заказа,req.body.Код_заказчика,req.body.Вид_оплаты,req.body.Код_вида_доставки,req.body.Дата_заказа,req.body.Область_доставки,req.body.Город_доставки,req.body.УлицаКвДом_доставки,req.body.Код_статуса_заказа,req.body.Код_сотрудника,req.body.Цена).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateCategories', (req,res) => {
-    dbOperation.UpdateCategories(req.body.Код_категории_сладостей,req.body.Наименование).then(r =>{
+app.post('/updateCategories', (req,res) => {
+    dbOperation.updateCategories(req.body.Код_категории_сладостей,req.body.Наименование).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateSupplyOfGoods', (req,res) => {
-    dbOperation.UpdateSupplyOfGoods(req.body.Код_поставки,req.body.Код_товара,req.body.Количество_товара).then(r =>{
+app.post('/updateSupplyOfGoods', (req,res) => {
+    dbOperation.updateSupplyOfGoods(req.body.Код_поставки,req.body.Код_товара,req.body.Количество_товара).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateSupplies', (req,res) => {
-    dbOperation.UpdateSupplies(req.body.Код_поставки,req.body.ИНН_поставщика,req.body.Дата_поставки,req.body.Цена).then(r =>{
+app.post('/updateSupplies', (req,res) => {
+    dbOperation.updateSupplies(req.body.Код_поставки,req.body.ИНН_поставщика,req.body.Дата_поставки,req.body.Цена).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateSuppliers', (req,res) => {
-    dbOperation.UpdateSuppliers(req.body.ИНН_поставщика,req.body.Название_организации,req.body.Область,req.body.Город,req.body.УлицаКвДом,req.body.Телефон).then(r =>{
+app.post('/updateSuppliers', (req,res) => {
+    dbOperation.updateSuppliers(req.body.ИНН_поставщика,req.body.Название_организации,req.body.Область,req.body.Город,req.body.УлицаКвДом,req.body.Телефон).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateManufacturer', (req,res) => {
-    dbOperation.UpdateManufacturer(req.body.ИНН_производителя,req.body.Название_организации,req.body.Область,req.body.Город,req.body.УлицаКвДом,req.body.Телефон).then(r =>{
+app.post('/updateManufacturer', (req,res) => {
+    dbOperation.updateManufacturer(req.body.ИНН_производителя,req.body.Название_организации,req.body.Область,req.body.Город,req.body.УлицаКвДом,req.body.Телефон).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateEmployees', (req,res) => {
-    dbOperation.UpdateEmployees(req.body.Код_сотрудника,req.body.Фамилия,req.body.Имя,req.body.Отчество,req.body.Код_должности,req.body.Телефон,req.body.Область,req.body.Город,req.body.УлицаКвДом).then(r =>{
+app.post('/updateEmployees', (req,res) => {
+    dbOperation.updateEmployees(req.body.Код_сотрудника,req.body.Фамилия,req.body.Имя,req.body.Отчество,req.body.Код_должности,req.body.Телефон,req.body.Область,req.body.Город,req.body.УлицаКвДом).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateOrderStatus', (req,res) => {
-    dbOperation.UpdateOrderStatus(req.body.Код_статуса_заказа,req.body.Наименование).then(r =>{
+app.post('/updateOrderStatus', (req,res) => {
+    dbOperation.updateOrderStatus(req.body.Код_статуса_заказа,req.body.Наименование).then(r =>{
         res.send(r)
     })
 })
-app.post('/UpdateProducts', (req,res) => {
-    dbOperation.UpdateProducts(req.body.Код_товара,req.body.Наименование,req.body.Код_единицы_измерения,req.body.Цена,req.body.Количество_остатка,req.body.Срок_годности,req.body.Код_категории_сладостей,req.body.Номер_сертификата,req.body.Состав,req.body.ИНН_производителя).then(r =>{
+app.post('/updateProducts', (req,res) => {
+    dbOperation.updateProducts(req.body.Код_товара,req.body.Наименование,req.body.Код_единицы_измерения,req.body.Цена,req.body.Количество_остатка,req.body.Срок_годности,req.body.Код_категории_сладостей,req.body.Номер_сертификата,req.body.Состав,req.body.ИНН_производителя).then(r =>{
         res.send(r)
     })
 })
