@@ -140,73 +140,73 @@ app.post('/getDeliveriesByDeliverer', (req,res) => {
 })
 
 // Вставки
-app.post('/InsertTypeOfDelivery', (req,res) => {
-    dbOperation.InsertTypeOfDelivery(req.body.id,req.body.name).then(r =>{
+app.post('/insertTypeOfDelivery', (req,res) => {
+    dbOperation.insertTypeOfDelivery(req.body.id,req.body.name).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertPositions', (req,res) => {
-    dbOperation.InsertPositions(req.body.id,req.body.name).then(r =>{
+app.post('/insertPositions', (req,res) => {
+    dbOperation.insertPositions(req.body.id,req.body.name).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertUnitsOfMeasurement', (req,res) => {
-    dbOperation.InsertUnitsOfMeasurement(req.body.id,req.body.name).then(r =>{
+app.post('/insertUnitsOfMeasurement', (req,res) => {
+    dbOperation.insertUnitsOfMeasurement(req.body.id,req.body.name).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertCustomTools', (req,res) => {
-    dbOperation.InsertCustomTools(req.body.id1,req.body.id2,req.body.count).then(r =>{
+app.post('/insertCustomTools', (req,res) => {
+    dbOperation.insertCustomTools(req.body.id1,req.body.id2,req.body.count).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertCustomers', (req,res) => {
-    dbOperation.InsertCustomers(req.body.id,req.body.f,req.body.i,req.body.o,req.body.phone,req.body.login,req.body.password,req.body.date,req.body.mail,req.body.date_reg).then(r =>{
+app.post('/insertCustomers', (req,res) => {
+    dbOperation.insertCustomers(req.body.id,req.body.f,req.body.i,req.body.o,req.body.phone,req.body.login,req.body.password,req.body.date,req.body.mail,req.body.date_reg).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertOrders', (req,res) => {
-    dbOperation.InsertOrders(req.body.id,req.body.id_customer,req.body.pay,req.body.id_deliver,req.body.date,req.body.area,req.body.city,req.body.street,req.body.id_status,req.body.id_employee,req.body.price).then(r =>{
+app.post('/insertOrders', (req,res) => {
+    dbOperation.insertOrders(req.body.id,req.body.id_customer,req.body.pay,req.body.id_deliver,req.body.date,req.body.area,req.body.city,req.body.street,req.body.id_status,req.body.id_employee,req.body.price).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertCategories', (req,res) => {
-    dbOperation.InsertCategories(req.body.id,req.body.name).then(r =>{
+app.post('/insertCategories', (req,res) => {
+    dbOperation.insertCategories(req.body.id,req.body.name).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertSupplyOfGoods', (req,res) => {
-    dbOperation.InsertSupplyOfGoods(req.body.id1,req.body.id2,req.body.count).then(r =>{
+app.post('/insertSupplyOfGoods', (req,res) => {
+    dbOperation.insertSupplyOfGoods(req.body.id1,req.body.id2,req.body.count).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertSupplies', (req,res) => {
-    dbOperation.InsertSupplies(req.body.id,req.body.inn,req.body.date,req.body.price).then(r =>{
+app.post('/insertSupplies', (req,res) => {
+    dbOperation.insertSupplies(req.body.id,req.body.inn,req.body.date,req.body.price).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertSuppliers', (req,res) => {
-    dbOperation.InsertSuppliers(req.body.inn,req.body.name,req.body.area,req.body.city,req.body.street,req.body.phone).then(r =>{
+app.post('/insertSuppliers', (req,res) => {
+    dbOperation.insertSuppliers(req.body.inn,req.body.name,req.body.area,req.body.city,req.body.street,req.body.phone).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertManufacturer', (req,res) => {
-    dbOperation.InsertManufacturer(req.body.inn,req.body.name,req.body.area,req.body.city,req.body.street,req.body.phone).then(r =>{
+app.post('/insertManufacturer', (req,res) => {
+    dbOperation.insertManufacturer(req.body.inn,req.body.name,req.body.area,req.body.city,req.body.street,req.body.phone).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertEmployees', (req,res) => {
-    dbOperation.InsertEmployees(req.body.id,req.body.f,req.body.i,req.body.o,req.body.id_post,req.body.phone,req.body.area,req.body.city,req.body.street).then(r =>{
+app.post('/insertEmployees', (req,res) => {
+    dbOperation.insertEmployees(req.body.Код_сотрудника,req.body.Фамилия,req.body.Имя,req.body.Отчество,req.body.Код_должности,req.body.Телефон,req.body.Область,req.body.Город,req.body.УлицаКвДом).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertOrderStatus', (req,res) => {
-    dbOperation.InsertOrderStatus(req.body.id,req.body.name).then(r =>{
+app.post('/insertOrderStatus', (req,res) => {
+    dbOperation.insertOrderStatus(req.body.id,req.body.name).then(r =>{
         res.send(r)
     })
 })
-app.post('/InsertProducts', (req,res) => {
-    dbOperation.InsertProducts(req.body.id,req.body.name,req.body.id_unit,req.body.price,req.body.count,req.body.expiration_date,req.body.id_category,req.body.certificate,req.body.structure,req.body.inn).then(r =>{
+app.post('/insertProducts', (req,res) => {
+    dbOperation.insertProducts(req.body.id,req.body.name,req.body.id_unit,req.body.price,req.body.count,req.body.expiration_date,req.body.id_category,req.body.certificate,req.body.structure,req.body.inn).then(r =>{
         res.send(r)
     })
 })
