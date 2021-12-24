@@ -106,35 +106,40 @@ app.get('/getDeliverers', (req,res) => {
         res.send(r)
     })
 })
+  /*Заказчик и его товары, которые просрочатся в течении оперд.кол-ва дней*/
 app.post('/getAnal1', (req,res) => {
-    dbOperation.getAnal1(req.body.id,req.body.date).then(r =>{
+    dbOperation.getAnal1(req.body.Код_заказчика,req.body.Дни).then(r =>{
         res.send(r)
     })
 })
+  /*Общая цена покупок заказчика в определенный месяц*/
 app.post('/getAnal2', (req,res) => {
-    dbOperation.getAnal2(req.body.id).then(r =>{
+    dbOperation.getAnal2(req.body.Код_заказчика).then(r =>{
         res.send(r)
     })
 })
+  /*Сумма продаж товара по месяцам*/
 app.post('/getAnal3', (req,res) => {
-    dbOperation.getAnal3(req.body.id).then(r =>{
+    dbOperation.getAnal3(req.body.Код_товара).then(r =>{
         res.send(r)
     })
 })
+/*Сумма постаков товара по месяцам*/
 app.post('/getAnal4', (req,res) => {
-    dbOperation.getAnal4(req.body.id).then(r =>{
+    dbOperation.getAnal4(req.body.Код_товара).then(r =>{
         res.send(r)
     })
 })
+  /*Заказчики конкретного производителя и их товары*/
 app.post('/getAnal5', (req,res) => {
-    dbOperation.getAnal5(req.body.id).then(r =>{
+    dbOperation.getAnal5(req.body.Название_организации).then(r =>{
         res.send(r)
     })
 })
 
 
 app.post('/getDeliveriesByDeliverer', (req,res) => {
-    dbOperation.getDeliveriesByDeliverer(req.body.param).then(r =>{
+    dbOperation.getDeliveriesByDeliverer(req.body.Код_заказчика).then(r =>{
         res.send(r)
     })
     .catch(er =>{
