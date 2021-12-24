@@ -17,9 +17,7 @@ import { Input } from '@mui/material';
 import allTablesWithRequests from "../../../utils/Tables";
 import Menu from '@mui/material/Menu';
 import _ from 'lodash'
-
-interface Props {
-}
+import AnalyticalRequests from '../../../utils/AnalyticalRequests'
 
 export const style = {
     position: 'absolute' as 'absolute',
@@ -35,8 +33,11 @@ export const style = {
     pb: 3,
 };
 
-
-export const Tables = ({ }: Props) => {
+interface SelectedColumnData{
+    key: string,
+    value: string
+}
+export const Tables = () => {
 
 
     const [rows, setRows] = useState([{}])
@@ -47,10 +48,11 @@ export const Tables = ({ }: Props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [editData, setEditData] = useState(false)
     const open = Boolean(anchorEl);
+    const [selectedColumnData, setSelectedColumnData] = useState<SelectedColumnData>()
 
     const handleClick = (event: React.MouseEvent<HTMLTableCellElement>) => {
-        setAnchorEl(event.currentTarget);
-        event.preventDefault();
+        setAnchorEl(event.currentTarget)
+        event.preventDefault()
     };
     const handleClose = () => {
         setEditData(true)
@@ -78,7 +80,7 @@ export const Tables = ({ }: Props) => {
         if (url) {
             let tempObj = {}
             Object.keys(rows[0]).forEach((key, idx) => {
-                if (idx == 0 && !key.includes("ИНН") && !editData ) {
+                if (idx == 0 && !key.includes("ИНН") && !editData) {
                     let tempId = (rows[rows.length - 1] as any)[key] + 1;
                     (tempObj as any)[key] = tempId
                 }
@@ -111,7 +113,30 @@ export const Tables = ({ }: Props) => {
                 });
         }
     }
-
+    const analyticalRequest =  async (url: string | undefined) => {
+        if (url && selectedColumnData) {
+            const newData = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({[selectedColumnData.key]: selectedColumnData.value})
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    if(data.recordset.length != 0){
+                        setRows(data.recordset)
+                    }
+                    else(
+                        setRows([{}])
+                    )
+                    setSelectedTable("")
+                });
+        }
+    }
 
     const handleChange = (event: SelectChangeEvent) => {
         setSelectedTable(event.target.value);
@@ -163,11 +188,11 @@ export const Tables = ({ }: Props) => {
                                     }
                                 })
                             }
-                            <Button variant="contained" onClick={() => { 
-                                let temp = _.find(allTablesWithRequests, { get: selectedTable }); 
-                                
+                            <Button variant="contained" onClick={() => {
+                                let temp = _.find(allTablesWithRequests, { get: selectedTable });
+
                                 editData ? insertData(temp?.update) : insertData(temp?.insert)
-                                }}>{editData ? "Изменить" :"Добавить"}</Button>
+                            }}>{editData ? "Изменить" : "Добавить"}</Button>
                         </Box>
                     </Modal>
                     <Modal
@@ -219,23 +244,33 @@ export const Tables = ({ }: Props) => {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 {Object.keys(row).map((key: string) => {
-                                    return <TableCell align="left" onContextMenu={(e) => { handleClick(e); setTempData(row)}}>{row[key]}</TableCell>
+                                    return <TableCell align="left" onContextMenu={(e) => { handleClick(e); setSelectedColumnData({ key: key, value: row[key] }); setTempData(row) }}>{row[key]}</TableCell>
                                 })}
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
-                >
-                    <MenuItem onClick={() => { handleClose(); }}>Изменить</MenuItem>
-                </Menu>
+                {
+                    selectedColumnData && selectedTable.length != 0 &&
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            <MenuItem onClick={() => { handleClose(); }}>Изменить</MenuItem>
+                            {
+                                AnalyticalRequests.map((req) => {
+                                    if(req.mainData.includes(selectedColumnData.key)){
+                                    return <MenuItem onClick={() => { setAnchorEl(null); analyticalRequest(req.link)}}>{req.description}</MenuItem>
+                                    }
+                                })
+                            }
+                        </Menu>
+                }
             </TableContainer>
             {selectedTable != "" && <Button variant="contained" onClick={() => { setOpenModal(true); setEditData(false); setTempData({}) }}>Добавить новую строку</Button>}
         </>
