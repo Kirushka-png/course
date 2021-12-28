@@ -16,8 +16,9 @@ import Modal from '@mui/material/Modal';
 import { Input } from '@mui/material';
 import allTablesWithRequests from "../../../utils/Tables";
 import Menu from '@mui/material/Menu';
-import _ from 'lodash'
+import _, { map } from 'lodash'
 import AnalyticalRequests from '../../../utils/AnalyticalRequests'
+import AllInserting from '../../../utils/AllInserting'
 
 export const style = {
     position: 'absolute' as 'absolute',
@@ -33,7 +34,7 @@ export const style = {
     pb: 3,
 };
 
-interface SelectedColumnData{
+interface SelectedColumnData {
     key: string,
     value: string
 }
@@ -41,6 +42,7 @@ export const Tables = () => {
 
 
     const [rows, setRows] = useState([{}])
+    const [ErrorMessage, setErrorMessage] = useState("")
     const [selectedTable, setSelectedTable] = useState("")
     const [openModal, setOpenModal] = useState(false)
     const [tempData, setTempData] = useState<any>({})
@@ -80,7 +82,8 @@ export const Tables = () => {
         if (url) {
             let tempObj = {}
             Object.keys(rows[0]).forEach((key, idx) => {
-                if (idx == 0 && !key.includes("ИНН") && !editData) {
+                let temp = _.find(allTablesWithRequests, { get: selectedTable });
+                if (temp && idx == 0 && !AllInserting.includes(temp.name) && !editData) {
                     let tempId = (rows[rows.length - 1] as any)[key] + 1;
                     (tempObj as any)[key] = tempId
                 }
@@ -102,8 +105,18 @@ export const Tables = () => {
                 })
                 .then((data) => {
                     console.log(data)
-                    if (data.name && data.name.includes("Error")) {
+                    if (data.name && (data.name.includes("Error")) || (data.recordsets && data.recordsets.length != 0)) {
                         setOpenErrorModal(true)
+                        if (data.recordsets && data.recordsets.length != 0) {
+                            let temperr = ""
+                            data.recordsets.forEach((Err: any) => {
+                                temperr += Err[0].Error + ";\n"
+                            })
+                            setErrorMessage(temperr)
+                        }
+                        else {
+                            setErrorMessage("")
+                        }
                     }
                     else {
                         setOpenModal(false)
@@ -113,7 +126,7 @@ export const Tables = () => {
                 });
         }
     }
-    const analyticalRequest =  async (url: string | undefined) => {
+    const analyticalRequest = async (url: string | undefined) => {
         if (url && selectedColumnData) {
             const newData = await fetch(url, {
                 method: 'POST',
@@ -121,16 +134,16 @@ export const Tables = () => {
                     'content-type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({[selectedColumnData.key]: selectedColumnData.value})
+                body: JSON.stringify({ [selectedColumnData.key]: selectedColumnData.value })
             })
                 .then((response) => {
                     return response.json();
                 })
                 .then((data) => {
-                    if(data.recordset.length != 0){
+                    if (data.recordset.length != 0) {
                         setRows(data.recordset)
                     }
-                    else(
+                    else (
                         setRows([{}])
                     )
                     setSelectedTable("")
@@ -174,7 +187,8 @@ export const Tables = () => {
                             {
 
                                 Object.keys(rows[0]).map((key, idx) => {
-                                    if ((idx == 0 && !key.includes("ИНН")) || (editData && idx == 0)) {
+                                    let temp = _.find(allTablesWithRequests, { get: selectedTable });
+                                    if ((temp && idx == 0 && !AllInserting.includes(temp.name)) || (editData && idx == 0)) {
                                         let tempId = (rows[rows.length - 1] as any)[key] + 1
                                         return <>
                                             <p id="child-modal-description">{key} : {editData ? tempData[key] : tempId}</p>
@@ -190,8 +204,12 @@ export const Tables = () => {
                             }
                             <Button variant="contained" onClick={() => {
                                 let temp = _.find(allTablesWithRequests, { get: selectedTable });
-
-                                editData ? insertData(temp?.update) : insertData(temp?.insert)
+                                let tempLength = Object.keys(tempData).length
+                                temp  && !AllInserting.includes(temp.name) && tempLength++
+                                if(tempLength >= Object.keys(rows[0]).length && !_.includes(tempData, "")) { editData ? insertData(temp?.update) : insertData(temp?.insert) } else {
+                                    setErrorMessage("Введены не все поля")
+                                    setOpenErrorModal(true)
+                                }
                             }}>{editData ? "Изменить" : "Добавить"}</Button>
                         </Box>
                     </Modal>
@@ -203,9 +221,9 @@ export const Tables = () => {
                         aria-describedby="child-modal-description"
                     >
                         <Box sx={{ ...style, width: 200 }}>
-                            <h2 id="child-modal-title">Ошибка запроса</h2>
+                            <h2 id="child-modal-title">Ошибка!</h2>
                             <p id="child-modal-description">
-                                Неверно введены данные
+                                {ErrorMessage}
                             </p>
                             <Button onClick={() => { setOpenErrorModal(false) }}>Закрыть</Button>
                         </Box>
@@ -252,24 +270,24 @@ export const Tables = () => {
                 </Table>
                 {
                     selectedColumnData && selectedTable.length != 0 &&
-                        <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            <MenuItem onClick={() => { handleClose(); }}>Изменить</MenuItem>
-                            {
-                                AnalyticalRequests.map((req) => {
-                                    if(req.mainData.includes(selectedColumnData.key)){
-                                    return <MenuItem onClick={() => { setAnchorEl(null); analyticalRequest(req.link)}}>{req.description}</MenuItem>
-                                    }
-                                })
-                            }
-                        </Menu>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={() => setAnchorEl(null)}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <MenuItem onClick={() => { handleClose(); }}>Изменить</MenuItem>
+                        {
+                            AnalyticalRequests.map((req) => {
+                                if (req.mainData.includes(selectedColumnData.key)) {
+                                    return <MenuItem onClick={() => { setAnchorEl(null); analyticalRequest(req.link) }}>{req.description}</MenuItem>
+                                }
+                            })
+                        }
+                    </Menu>
                 }
             </TableContainer>
             {selectedTable != "" && <Button variant="contained" onClick={() => { setOpenModal(true); setEditData(false); setTempData({}) }}>Добавить новую строку</Button>}

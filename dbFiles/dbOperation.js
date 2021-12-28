@@ -272,7 +272,7 @@ const getProductsOfCategory = async(param) => {
 const getProductsOfManufacturer = async(param) => {
     try {
         let pool = await sql.connect(config);
-        let deliveries = pool.request().query(`exec check8 ${param}`)
+        let deliveries = pool.request().query(`exec check8 '${param}'`)
         console.log(deliveries)
         return deliveries
     }
@@ -349,7 +349,7 @@ const getAnal4 = async(param) => {
 const getAnal5 = async(param) => {
     try {
         let pool = await sql.connect(config);
-        let deliveries = pool.request().query(`exec check15 ${param}`)
+        let deliveries = pool.request().query(`exec check15 '${param}'`)
         console.log(deliveries)
         return deliveries
     }
@@ -418,7 +418,7 @@ const insertCustomTools  = async(id1,id2,count) => {
 const insertCustomers  = async(id,f,i,o,phone,login,password,date,mail,date_reg) => {
     try {
         let pool = await sql.connect(config);
-        let deliveries = pool.request().query(`insert into Заказчики values(${id},'${f}','${i}','${o}','${phone}','${login}','${password}','${date}','${mail}','${date_reg}')`)
+        let deliveries = pool.request().query(`exec check_customer_phone ${id},'${f}','${i}','${o}','${phone}','${login}','${password}','${date}','${mail}','${date_reg}'`)
         console.log(deliveries)
         return deliveries
     }
@@ -429,7 +429,7 @@ const insertCustomers  = async(id,f,i,o,phone,login,password,date,mail,date_reg)
 const insertOrders  = async(id,id_customer,pay,id_deliver,date,area,city,street,id_status,id_employee,price) => {
     try {
         let pool = await sql.connect(config);
-        let deliveries = pool.request().query(`insert into Заказы values(${id},${id_customer},'${pay}',${id_deliver},'${date}','${area}','${city}','${street}',${id_status},${id_employee},${price})`)
+        let deliveries = pool.request().query(`exec check_order_customer_pay_men ${id},${id_customer},'${pay}',${id_deliver},'${date}','${area}','${city}','${street}',${id_status},${id_employee},${price}`)
         console.log(deliveries)
         return deliveries
     }
@@ -451,7 +451,7 @@ const insertCategories  = async(id,name) => {
 const insertSupplyOfGoods  = async(id1,id2,count) => {
     try {
         let pool = await sql.connect(config);
-        let deliveries = pool.request().query(`insert into Поставка_товары values(${id1},${id2},${count})`)
+        let deliveries = pool.request().query(`exec check_shipmentproduct_count ${id1},${id2},${count}`)
         console.log(deliveries)
         return deliveries
     }
@@ -517,7 +517,7 @@ const insertOrderStatus  = async(id,name) => {
 const insertProducts  = async(id,name,id_unit,price,count,expiration_date,id_category,certificate,structure,inn) => {
     try {
         let pool = await sql.connect(config);
-        let deliveries = pool.request().query(`insert into Товары values(${id},'${name}',${id_unit},${price},${count},'${expiration_date}',${id_category},'${certificate}','${structure}','${inn}')`)
+        let deliveries = pool.request().query(`exec check_product_count ${id},'${name}',${id_unit},${price},${count},'${expiration_date}',${id_category},'${certificate}','${structure}','${inn}'`)
         console.log(deliveries)
         return deliveries
     }
@@ -734,5 +734,9 @@ module.exports = {
     updateSupplies,
     updateSupplyOfGoods,
     updateTypeOfDelivery,
-    updateUnitsOfMeasurement
+    updateUnitsOfMeasurement,
+    getLastDeliveryOfGoods,
+    getCustomersLastOrder,
+    getEmployeeOrders,
+    getProductsOfManufacturer
 }   

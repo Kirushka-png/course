@@ -29,5 +29,35 @@ export const anReq = [
         link: "/getAnal5",
         description: "Заказчики и их товары"
     },
+    {
+        mainData: "Код_заказчика",
+        params: false,
+        link: "/getDeliveriesByDeliverer",
+        description: "Заказы"
+    },
+    {
+        mainData: "Код_товара",
+        params: false,
+        link: "/getLastDeliveryOfGoods",
+        description: "Последняя поставка"
+    },
+    {
+        mainData: "Код_заказчика",
+        params: false,
+        link: "/getCustomersLastOrder",
+        description: "Последний заказ"
+    },
+    {
+        mainData: "Код_сотрудника",
+        params: false,
+        link: "/getEmployeeOrders",
+        description: "Количество заказов"
+    },
+    {
+        mainData: "ИНН_производителя",
+        params: false,
+        link: "/getProductsOfManufacturer",
+        description: "Товары"
+    }
 ]
 export default anReq
