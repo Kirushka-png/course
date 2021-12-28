@@ -69,6 +69,9 @@ const Main = ({ link }: Props) => {
   const [role, setRole] = useState("user")
 
   useEffect(() => {
+  }, [])
+
+  useEffect(() => {
     Cookies.getCookie("role") == "manager" && setRole("manager")
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -113,7 +116,7 @@ const Main = ({ link }: Props) => {
             </Links>
             <Title to="/main/home">COOKIES</Title>
             <Links>
-              <Link to="/main/home">Instagram</Link>
+              <Link to="/">LOGOUT</Link>
               <Link to="/main/home">Facebook</Link>
               <Link to="/main/home">Youtube</Link>
               <Link to="/main/cart">Корзина 
@@ -123,7 +126,11 @@ const Main = ({ link }: Props) => {
               </Link>
             </Links>
             </> :
-            <Title to="/main/tables">COOKIES</Title>
+            <>
+            <Links><Link to="/main/tables">Таблицы</Link></Links>
+              <Title to="/main/home">COOKIES</Title>
+              <Links><Link to="/">LOGOUT</Link></Links>
+            </>
           }
           </NavBar>
         </Header>

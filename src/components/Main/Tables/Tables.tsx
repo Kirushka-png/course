@@ -45,8 +45,8 @@ export const Tables = () => {
     const [ErrorMessage, setErrorMessage] = useState("")
     const [selectedTable, setSelectedTable] = useState("")
     const [openModal, setOpenModal] = useState(false)
-    const [tempData, setTempData] = useState<any>({})
     const [openErrorModal, setOpenErrorModal] = useState(false)
+    const [tempData, setTempData] = useState<any>({})
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [editData, setEditData] = useState(false)
     const open = Boolean(anchorEl);
@@ -205,8 +205,8 @@ export const Tables = () => {
                             <Button variant="contained" onClick={() => {
                                 let temp = _.find(allTablesWithRequests, { get: selectedTable });
                                 let tempLength = Object.keys(tempData).length
-                                temp  && !AllInserting.includes(temp.name) && tempLength++
-                                if(tempLength >= Object.keys(rows[0]).length && !_.includes(tempData, "")) { editData ? insertData(temp?.update) : insertData(temp?.insert) } else {
+                                temp && !AllInserting.includes(temp.name) && tempLength++
+                                if (tempLength >= Object.keys(rows[0]).length && !_.includes(tempData, "")) { editData ? insertData(temp?.update) : insertData(temp?.insert) } else {
                                     setErrorMessage("Введены не все поля")
                                     setOpenErrorModal(true)
                                 }

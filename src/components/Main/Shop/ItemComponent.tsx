@@ -22,8 +22,8 @@ const ModalContainer = styled(Box)`
 `
 
 interface ItemsProps {
-    itemInfo: Item,
-    onChangeItem(newItem: CartItem): any
+    itemInfo: any,
+    onChangeItem(newItem: any): any
 }
 
 export const ItemComponent = ({ itemInfo, onChangeItem }: ItemsProps) => {
@@ -35,8 +35,8 @@ export const ItemComponent = ({ itemInfo, onChangeItem }: ItemsProps) => {
         <>
             <ItemContainer onClick={() => { setItemOpened(true) }}>
                 <ItemImg src={cookie} />
-                <ItemText>{itemInfo.name}</ItemText>
-                <ItemText>{"RUB " + itemInfo.price.toFixed(2)}</ItemText>
+                <ItemText>{itemInfo?.name}</ItemText>
+                <ItemText>{"RUB " + itemInfo?.price?.toFixed(2)}</ItemText>
             </ItemContainer>
             <Modal
                 open={itemOpened}
@@ -47,14 +47,14 @@ export const ItemComponent = ({ itemInfo, onChangeItem }: ItemsProps) => {
                 <ModalContainer>
                     <ModalHeader>
                         <ModalTitle>
-                            {itemInfo.name}
+                            {itemInfo?.name}
                         </ModalTitle>
                     </ModalHeader>
                     <ModalBody>
                         <ItemImgModal src={cookie} />
                         <ItemContainerModal>
-                            <ItemText>{itemInfo.name}</ItemText>
-                            <ItemText>{"RUB " + itemInfo.price.toFixed(2)}</ItemText>
+                            <ItemText>{itemInfo?.name}</ItemText>
+                            <ItemText>{"RUB " + itemInfo?.price?.toFixed(2)}</ItemText>
                             <ItemText>ОПИСАНИЕ</ItemText>
                             <ItemDescription>
                                 Это информация о товаре. Расскажите подробно, что он из себя представляет, и перечислите всю необходимую информацию: размеры, материалы, инструкции по уходу и т. д. Это также хорошая возможность сообщить, в чем особенность вашей продукции и какую выгоду покупатели получат в итоге. Подробные сведения о товаре помогут вашим посетителям определиться с покупкой.

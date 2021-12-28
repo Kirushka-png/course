@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom';
-
+import { Link, NavLink } from 'react-router-dom';
 export const LoginContainer = styled.div`
     width: 100vw;
     height: 100vh;
@@ -18,11 +17,11 @@ export const LoginForm = styled.div`
     background-color: rgba(230,20,230,0.5);
     border-radius: 20px;
     row-gap: 20px;
-    > p{
-        color: white;
-        font-weight: 600;
-        font-size: 24px;
-    }
+`
+export const Linker = styled(NavLink)`
+    color: white;
+    font-weight: 600;
+    font-size: 24px;
 `
 export const LoginInputContainer = styled.div`
     display: flex;
@@ -46,7 +45,7 @@ export const LoginInput = styled.input`
     }
 `
 export const LoginButton = styled(Link)`
-    width: 150px;
+    width: 80%;
     height: 50px;
     background-color: rgb(230,20,230);
     border:none;

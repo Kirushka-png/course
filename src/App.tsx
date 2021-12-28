@@ -7,29 +7,21 @@ import {
   Navigate
 } from 'react-router-dom'
 import Main from './components/Main/Main';
-import Cookies from './utils/Cookies';
-import { useEffect } from 'react'
+import Registration from './components/Login/Registration'
 
 function App() {
-
-  useEffect(() => {
-
-  }, [])
-  
-  const onLogin = (username:string)=>{
-    username == "manager" ? Cookies.setCookie("role", "manager") : Cookies.setCookie("role", "user")
-  }
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />}/>
-        <Route path="/login" element={<Login onClick={(e)=>{onLogin(e)}}/>}/>
-        <Route path="/main/home" element={<Main link="home"/>}/>
-        <Route path="/main/shop" element={<Main link="shop"/>}/>
-        <Route path="/main/cart" element={<Main link="cart"/>}/>
-        <Route path="/main/supplies" element={<Main link="supplies"/>}/>
-        <Route path="/main/tables" element={<Main link="tables"/>}/>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/reg" element={<Registration/>} />
+        <Route path="/main/home" element={<Main link="home" />} />
+        <Route path="/main/shop" element={<Main link="shop" />} />
+        <Route path="/main/cart" element={<Main link="cart" />} />
+        <Route path="/main/supplies" element={<Main link="supplies" />} />
+        <Route path="/main/tables" element={<Main link="tables" />} />
       </Routes>
     </Router>
   )

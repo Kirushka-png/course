@@ -1,6 +1,7 @@
 import { ImageSlider, MainPageContainer, ItemsContainer, ItemsTitle, Item, ItemImg, ItemText } from '../../../styles/Main/MainPage/MainPage';
 import cookie from '../../../Images/cookie1.jpg'
-
+import { useEffect, useState } from 'react'
+import Cookies from '../../../utils/Cookies';
 export interface Item {
   name: string
   price: number
@@ -40,6 +41,7 @@ const items = [
 ]
 
 const Home = () => {
+
   return (
     <MainPageContainer>
       <ImageSlider
