@@ -99,27 +99,19 @@ const Main = ({ link }: Props) => {
             <MenuLink id="shop" className="menu-item" to="/main/shop">Магазин</MenuLink>
             <MenuLink id="about" className="menu-item" to="/main/about">Обо мне</MenuLink>
           </Menu>
-          <Title>COOKIES</Title>
+          <Title to="/main/home">COOKIES</Title>
         </Sidebar> :
         <Header>
           <NavBar>
+            {
+              !role.includes("manager") ?<>
             <Links>
               <Link to="/main/home">Главная</Link>
               <Link to="/main/shop">Магазин</Link>
-              {
-                role.includes("manager") ? 
-                  <>
-                    <Link to="/main/supplies">Доставки</Link> 
-                    <Link to="/main/tables">Данные</Link> 
-                  </>
-                  :
-                  <>
-                    <Link to="/main/contacts">Контакты</Link>
-                    <Link to="/main/about">Обо мне</Link>
-                  </>
-              }
+              <Link to="/main/contacts">Контакты</Link>
+              <Link to="/main/about">Обо мне</Link>
             </Links>
-            <Title>COOKIES</Title>
+            <Title to="/main/home">COOKIES</Title>
             <Links>
               <Link to="/main/home">Instagram</Link>
               <Link to="/main/home">Facebook</Link>
@@ -130,6 +122,9 @@ const Main = ({ link }: Props) => {
                 }
               </Link>
             </Links>
+            </> :
+            <Title to="/main/tables">COOKIES</Title>
+          }
           </NavBar>
         </Header>
       }

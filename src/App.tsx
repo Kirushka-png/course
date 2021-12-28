@@ -8,9 +8,14 @@ import {
 } from 'react-router-dom'
 import Main from './components/Main/Main';
 import Cookies from './utils/Cookies';
+import { useEffect } from 'react'
 
 function App() {
 
+  useEffect(() => {
+
+  }, [])
+  
   const onLogin = (username:string)=>{
     username == "manager" ? Cookies.setCookie("role", "manager") : Cookies.setCookie("role", "user")
   }

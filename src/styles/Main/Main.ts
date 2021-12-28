@@ -52,7 +52,7 @@ export const MenuLink = styled(Link)`
     }
     white-space: nowrap;
 `
-export const Title = styled.p`
+export const Title = styled(Link)`
     ${FlexCentering}
     width: 200px;
     font-size: 40px;

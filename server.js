@@ -108,7 +108,7 @@ app.get('/getDeliverers', (req,res) => {
 })
   /*Заказчик и его товары, которые просрочатся в течении оперд.кол-ва дней*/
 app.post('/getAnal1', (req,res) => {
-    dbOperation.getAnal1(req.body.Код_заказчика,req.body.Дни).then(r =>{
+    dbOperation.getAnal1(req.body.Код_заказчика,7).then(r =>{
         res.send(r)
     })
 })
@@ -136,7 +136,30 @@ app.post('/getAnal5', (req,res) => {
         res.send(r)
     })
 })
-
+    /*Последняя поставка товара*/
+app.post('/getLastDeliveryOfGoods', (req,res) => {
+    dbOperation.getLastDeliveryOfGoods(req.body.Код_товара).then(r =>{
+        res.send(r)
+    })
+})
+    /*Последний заказ*/
+app.post('/getCustomersLastOrder', (req,res) => {
+    dbOperation.getCustomersLastOrder(req.body.Код_заказчика).then(r =>{
+        res.send(r)
+    })
+})
+    /*Количество заказов*/
+app.post('/getEmployeeOrders', (req,res) => {
+    dbOperation.getEmployeeOrders(req.body.Код_сотрудника).then(r =>{
+        res.send(r)
+    })
+})
+    /*Товары данного производителя*/
+app.post('/getProductsOfManufacturer', (req,res) => {
+    dbOperation.getProductsOfManufacturer(req.body.ИНН_производителя).then(r =>{
+        res.send(r)
+    })
+})
 
 app.post('/getDeliveriesByDeliverer', (req,res) => {
     dbOperation.getDeliveriesByDeliverer(req.body.Код_заказчика).then(r =>{
